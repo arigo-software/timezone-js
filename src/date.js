@@ -539,7 +539,7 @@ function getLocalAbbr(dt){
 }
 
 function toIsoOffset(offset){
-	return (offset>=0?"-":"+") + _fixWidth(Math.abs(offset/60),2) + ":" + _fixWidth(offset%60,2);
+	return (offset>=0?"-":"+") + _fixWidth(Math.floor(Math.abs(offset/60)),2) + ":" + _fixWidth(Math.abs(offset%60),2);
 }
 
 
