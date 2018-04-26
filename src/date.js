@@ -196,6 +196,9 @@
     });
   };
 
+
+let defaultTimezone = null;
+
 // Constructor, which is similar to that of the native Date object itself
 timezoneJS.Date = function () {
     if(this === timezoneJS) {
@@ -205,7 +208,7 @@ timezoneJS.Date = function () {
         return arg !== null && arg !== undefined;
     })
     , dt = null
-    , tz = null
+    , tz = defaultTimezone
     , arr = []
     , valid = false
     ;
@@ -245,10 +248,10 @@ timezoneJS.Date = function () {
             dt = new Date(args[0]);
             // Date strings are local if they do not contain 'Z', 'T' or timezone offsets like '+0200'
             //  - more info below
-/*            if (typeof args[0] == 'string' && args[0].search(/[+-][0-9]{4}/) == -1
-            && args[0].search(/Z/) == -1 && args[0].search(/T/) == -1) {
+            if (typeof args[0] == 'string' && args[0].search(/[+-][0-9]{4}$/) == -1
+            && args[0].search(/Z/) == -1 && args[0].search(/T/) == -1 && args[0].search(/:/) != -1) {
                 is_dt_local = true;
-            }*/
+            }
             break;
         case 2:
             dt = new Date(args[0], args[1]);
@@ -293,6 +296,12 @@ timezoneJS.Date.now = function(tz){
     if (tz) return new timezoneJS.Date(tz);
     else return new timezoneJS.Date();
 };
+
+timezoneJS.Date.setDefaultTimezone = function(tz){
+	defaultTimezone = tz;
+};
+
+
 
   // Implements most of the native Date object
 timezoneJS.Date.prototype = {
